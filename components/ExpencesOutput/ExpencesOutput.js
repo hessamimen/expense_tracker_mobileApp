@@ -33,7 +33,7 @@ function ExpencesOutput({ expences, expencesPeriod }) {
   return (
     <View>
       <ExpencesSummary expences={DUMMY_EXPENSES} periodName={expencesPeriod} />
-      {/* <ExpencesList /> */}
+      <ExpencesList expences={DUMMY_EXPENSES} />
     </View>
   );
 }
