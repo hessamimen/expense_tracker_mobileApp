@@ -1,10 +1,10 @@
 import { FlatList } from "react-native";
-import { Text } from "react-native";
+import ExpenseItem from "./ExpenseItem";
 
+function rederExpenceItem(itemData) {
+  return <ExpenseItem {...itemData.item} />;
+}
 function ExpencesList({ expences }) {
-  function rederExpenceItem(itemData) {
-    return <Text>{itemData.item.title}</Text>;
-  }
   return (
     <FlatList
       data={expences}

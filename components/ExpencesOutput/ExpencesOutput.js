@@ -30,6 +30,31 @@ function ExpencesOutput({ expences, expencesPeriod }) {
       amount: 18.59,
       date: new Date("2022-02-28"),
     },
+    {
+      id: "e6",
+      title: "A pair of shoes",
+      amount: 59.99,
+      date: new Date("2021-12-19"),
+    },
+    {
+      id: "e7",
+      title: "A pair of glasses",
+      amount: 89.29,
+      date: new Date("2022-01-09"),
+    },
+    {
+      id: "e8",
+      title: "some bananas",
+      amount: 5.99,
+      date: new Date("2021-12-01"),
+    },
+    { id: "e9", title: "a book", amount: 14.99, date: new Date("2022-02-04") },
+    {
+      id: "e10",
+      title: "anouther book",
+      amount: 18.59,
+      date: new Date("2022-02-28"),
+    },
   ];
   return (
     <View style={styles.container}>
@@ -43,7 +68,9 @@ export default ExpencesOutput;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 24,
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 0,
     backgroundColor: GlobalStyles.colors.primary700,
     flex: 1,
   },
