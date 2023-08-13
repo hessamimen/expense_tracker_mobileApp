@@ -1,10 +1,13 @@
-import { useLayoutEffect } from "react";
+import { useContext, useLayoutEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constants/style";
 import Button from "../components/UI/Button";
+import { ExpensesContext } from "../store/expense-context";
 
 function ManageExpense({ route, navigation }) {
+  const expensesCtx = useContext(ExpensesContext);
+
   const editedExpenseId = route.params?.expenseId;
   const isEditing = !!editedExpenseId;
 
@@ -15,6 +18,7 @@ function ManageExpense({ route, navigation }) {
   }, [navigation, isEditing]);
 
   function deleteExpenseHandler() {
+    expensesCtx.deleteExpense(editedExpenseId);
     navigation.goBack();
   }
 
@@ -23,6 +27,21 @@ function ManageExpense({ route, navigation }) {
   }
 
   function confirmHandler() {
+    if (isEditing) {
+      //currently just add dummy data to implement the real imut data later
+      expensesCtx.updateExpense(editedExpenseId, {
+        description: "UPDATE TEST",
+        amount: 25.25,
+        date: new Date("2023-08-12"),
+      });
+    } else {
+      //currently just add dummy data to implement the real imut data later
+      expensesCtx.addExpense({
+        description: "ADD TEST",
+        amount: 25.25,
+        date: new Date("2023-08-12"),
+      });
+    }
     navigation.goBack();
   }
 
