@@ -15,8 +15,8 @@ function ExpenseForm() {
       <Input
         label="Date"
         textInputConfig={{
-          placeHolder: "YYYY-MM-DD",
-          maxength: 10,
+          placeholder: "YYYY-MM-DD",
+          maxLength: 10,
           onChangeText: () => {},
         }}
       />
@@ -25,7 +25,7 @@ function ExpenseForm() {
         textInputConfig={{
           multiline: true,
           autoCorrect: true,
-          autoCapitalize: true,
+          //   autoCapitalize: true,
           onChangeText: () => {},
         }}
       />
