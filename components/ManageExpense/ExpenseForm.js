@@ -19,22 +19,13 @@ function ExpenseForm({ submitButtonLabel, onCancel, onSubmit }) {
   }
 
   function submitHandler() {
-    if (isEditing) {
-      //currently just add dummy data to implement the real imut data later
-      expensesCtx.updateExpense(editedExpenseId, {
-        description: "UPDATE TEST",
-        amount: 25.25,
-        date: new Date("2023-08-12"),
-      });
-    } else {
-      //currently just add dummy data to implement the real imut data later
-      expensesCtx.addExpense({
-        description: "ADD TEST",
-        amount: 25.25,
-        date: new Date("2023-08-12"),
-      });
-    }
-    navigation.goBack();
+    const expenseData = {
+      amount: +inputValues.amount,
+      date: new Date(inputValues.date),
+      description: inputValues.description,
+    };
+
+    onSubmit(expenseData);
   }
   return (
     <View style={styles.form}>

@@ -27,21 +27,13 @@ function ManageExpense({ route, navigation }) {
     navigation.goBack();
   }
 
-  function confirmHandler() {
+  function confirmHandler(expenseData) {
     if (isEditing) {
       //currently just add dummy data to implement the real imut data later
-      expensesCtx.updateExpense(editedExpenseId, {
-        description: "UPDATE TEST",
-        amount: 25.25,
-        date: new Date("2023-08-12"),
-      });
+      expensesCtx.updateExpense(editedExpenseId, expenseData);
     } else {
       //currently just add dummy data to implement the real imut data later
-      expensesCtx.addExpense({
-        description: "ADD TEST",
-        amount: 25.25,
-        date: new Date("2023-08-12"),
-      });
+      expensesCtx.addExpense(expenseData);
     }
     navigation.goBack();
   }
@@ -50,6 +42,7 @@ function ManageExpense({ route, navigation }) {
     <View style={styles.container}>
       <ExpenseForm
         submitButtonLabel={isEditing ? "Update" : "Add"}
+        onSubmit={confirmHandler}
         onCancel={cancelHandler}
       />
 
