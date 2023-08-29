@@ -1,8 +1,9 @@
 import { StyleSheet, View, Text } from "react-native";
 import Input from "./Input";
 import { useState } from "react";
+import Button from "../UI/Button";
 
-function ExpenseForm() {
+function ExpenseForm({ submitButtonLabel, onCancel, onSubmit }) {
   const [inputValues, setinputValues] = useState({
     amount: "",
     date: "",
@@ -15,6 +16,25 @@ function ExpenseForm() {
         [inputIdentifier]: enteredVlue,
       };
     });
+  }
+
+  function submitHandler() {
+    if (isEditing) {
+      //currently just add dummy data to implement the real imut data later
+      expensesCtx.updateExpense(editedExpenseId, {
+        description: "UPDATE TEST",
+        amount: 25.25,
+        date: new Date("2023-08-12"),
+      });
+    } else {
+      //currently just add dummy data to implement the real imut data later
+      expensesCtx.addExpense({
+        description: "ADD TEST",
+        amount: 25.25,
+        date: new Date("2023-08-12"),
+      });
+    }
+    navigation.goBack();
   }
   return (
     <View style={styles.form}>
@@ -34,8 +54,8 @@ function ExpenseForm() {
           textInputConfig={{
             placeholder: "YYYY-MM-DD",
             maxLength: 10,
-            onChangeText: inputChangedHandler.bind(this, "description"),
-            value: inputValues.description,
+            onChangeText: inputChangedHandler.bind(this, "date"),
+            value: inputValues.date,
           }}
           style={styles.rowinput}
         />
@@ -46,10 +66,18 @@ function ExpenseForm() {
           multiline: true,
           autoCorrect: true,
           //   autoCapitalize: true,
-          onChangeText: inputChangedHandler.bind(this, "amount"),
-          value: inputValues.amount,
+          onChangeText: inputChangedHandler.bind(this, "description"),
+          value: inputValues.description,
         }}
       />
+      <View style={styles.buttons}>
+        <Button mode="flat" onPress={onCancel} style={styles.button}>
+          Cancel
+        </Button>
+        <Button onPress={submitHandler} style={styles.button}>
+          {submitButtonLabel}
+        </Button>
+      </View>
     </View>
   );
 }
@@ -74,5 +102,14 @@ const styles = StyleSheet.create({
 
   rowinput: {
     flex: 1,
+  },
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    minWidth: 120,
+    marginHorizontal: 8,
   },
 });
