@@ -5,6 +5,7 @@ import { GlobalStyles } from "../constants/style";
 import Button from "../components/UI/Button";
 import { ExpensesContext } from "../store/expense-context";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
+import { storeExpense } from "../util/http";
 
 function ManageExpense({ route, navigation }) {
   const expensesCtx = useContext(ExpensesContext);
@@ -33,10 +34,9 @@ function ManageExpense({ route, navigation }) {
 
   function confirmHandler(expenseData) {
     if (isEditing) {
-      //currently just add dummy data to implement the real imut data later
       expensesCtx.updateExpense(editedExpenseId, expenseData);
     } else {
-      //currently just add dummy data to implement the real imut data later
+      storeExpense(expenseData);
       expensesCtx.addExpense(expenseData);
     }
     navigation.goBack();
