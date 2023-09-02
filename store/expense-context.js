@@ -1,71 +1,72 @@
 import { createContext, useReducer } from "react";
 
-const DUMMY_EXPENSES = [
-  {
-    id: "e1",
-    description: "A pair of shoes",
-    amount: 59.99,
-    date: new Date("2023-08-10"),
-  },
-  {
-    id: "e2",
-    description: "A pair of glasses",
-    amount: 89.29,
-    date: new Date("2023-08-09"),
-  },
-  {
-    id: "e3",
-    description: "some bananas",
-    amount: 5.99,
-    date: new Date("2023-08-01"),
-  },
-  {
-    id: "e4",
-    description: "a book",
-    amount: 14.99,
-    date: new Date("2023-02-04"),
-  },
-  {
-    id: "e5",
-    description: "anouther book",
-    amount: 18.59,
-    date: new Date("2023-02-28"),
-  },
-  {
-    id: "e6",
-    description: "A pair of shoes",
-    amount: 59.99,
-    date: new Date("2023-08-13"),
-  },
-  {
-    id: "e7",
-    description: "A pair of glasses",
-    amount: 89.29,
-    date: new Date("2023-08-09"),
-  },
-  {
-    id: "e8",
-    description: "some bananas",
-    amount: 5.99,
-    date: new Date("2023-08-12"),
-  },
-  {
-    id: "e9",
-    description: "a book",
-    amount: 14.99,
-    date: new Date("2023-02-04"),
-  },
-  {
-    id: "e10",
-    description: "anouther book",
-    amount: 18.59,
-    date: new Date("2023-02-28"),
-  },
-];
+// const DUMMY_EXPENSES = [
+//   {
+//     id: "e1",
+//     description: "A pair of shoes",
+//     amount: 59.99,
+//     date: new Date("2023-08-10"),
+//   },
+//   {
+//     id: "e2",
+//     description: "A pair of glasses",
+//     amount: 89.29,
+//     date: new Date("2023-08-09"),
+//   },
+//   {
+//     id: "e3",
+//     description: "some bananas",
+//     amount: 5.99,
+//     date: new Date("2023-08-01"),
+//   },
+//   {
+//     id: "e4",
+//     description: "a book",
+//     amount: 14.99,
+//     date: new Date("2023-02-04"),
+//   },
+//   {
+//     id: "e5",
+//     description: "anouther book",
+//     amount: 18.59,
+//     date: new Date("2023-02-28"),
+//   },
+//   {
+//     id: "e6",
+//     description: "A pair of shoes",
+//     amount: 59.99,
+//     date: new Date("2023-08-13"),
+//   },
+//   {
+//     id: "e7",
+//     description: "A pair of glasses",
+//     amount: 89.29,
+//     date: new Date("2023-08-09"),
+//   },
+//   {
+//     id: "e8",
+//     description: "some bananas",
+//     amount: 5.99,
+//     date: new Date("2023-08-12"),
+//   },
+//   {
+//     id: "e9",
+//     description: "a book",
+//     amount: 14.99,
+//     date: new Date("2023-02-04"),
+//   },
+//   {
+//     id: "e10",
+//     description: "anouther book",
+//     amount: 18.59,
+//     date: new Date("2023-02-28"),
+//   },
+// ];
 
 export const ExpensesContext = createContext({
   expenses: [],
   addExpense: ({ description, amount, date }) => {},
+  setExpences: (expences) => {},
   deleteExpense: (id) => {},
   updateExpense: (id, { description, amount, date }) => {},
 });
@@ -75,6 +76,9 @@ function expensesReducer(state, action) {
     case "ADD":
       const id = new Date().toString() + Math.random().toString();
       return [{ ...action.payload, id: id }, ...state];
+
+    case "SET":
+      return action.payload;
 
     case "UPDATE":
       const updatableExpenseIndex = state.findIndex(
@@ -94,10 +98,14 @@ function expensesReducer(state, action) {
 }
 
 function ExpensesContextProvider({ children }) {
-  const [expensesState, dispatch] = useReducer(expensesReducer, DUMMY_EXPENSES);
+  const [expensesState, dispatch] = useReducer(expensesReducer, []);
 
   function addExpense(expenseData) {
     dispatch({ type: "ADD", payload: expenseData });
+  }
+
+  function setExpences(expences) {
+    dispatch({ type: "SET", payload: expences });
   }
   function deleteExpense(id) {
     dispatch({ type: "DELETE", payload: id });
@@ -108,6 +116,7 @@ function ExpensesContextProvider({ children }) {
 
   const value = {
     expenses: expensesState,
+    setExpences: setExpences,
     addExpense: addExpense,
     updateExpense: updateExpense,
     deleteExpense: deleteExpense,
